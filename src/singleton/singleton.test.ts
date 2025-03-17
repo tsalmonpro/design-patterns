@@ -1,28 +1,17 @@
-import { expect, assert, it, toStrictEqual } from 'vitest'
+import { expect, it } from 'vitest'
+import takeALookAtMonaLisa from "./use-case/takeALookAtMonaLisa";
+import MonaLisaPainting from "./MonaLisaPainting";
 
-class Planet {
-  private static planet: Planet;
 
-  private constructor (readonly name: string) {}
-
-  static get earth(): Planet
-  {
-    if (!this.planet) {
-      this.planet = new Planet('earth')
-    }
-
-    return this.planet;
-  }
-}
-
-it('I can create the earth planet', () => {
-  const earth = Planet.earth
-  assert(earth, Planet);
+it('I can take a look at Mona Lisa', () => {
+  const monaLisa = takeALookAtMonaLisa();
+  expect(monaLisa).toBeInstanceOf(MonaLisaPainting)
 })
 
-it('I cannot create a second earth planet', () => {
-  const earth = Planet.earth;
-  const another = Planet.earth;
+it('The second look at Mona Lisa show me the same Mona Lisa', () => {
+  const firstLookAtMonaLisa = takeALookAtMonaLisa();
+  const secondLookAtMonaLisa = takeALookAtMonaLisa();
 
-  expect(earth).toStrictEqual(another);
+  expect(firstLookAtMonaLisa === secondLookAtMonaLisa).toBeTruthy()
 })
+
